@@ -18,7 +18,7 @@ jobs:
           d_username: ${{ vars.DOCKERHUB_USERNAME }}
         run: |
           echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ vars.DOCKERHUB_USERNAME }} --password-stdin
-          docker tag my-app $d_username/my-test-app:v${{ github.run_number }}
+          docker tag my-test-app $d_username/my-test-app:v${{ github.run_number }}
           docker push $d_username/my-test-app:v${{ github.run_number }}
 
     
