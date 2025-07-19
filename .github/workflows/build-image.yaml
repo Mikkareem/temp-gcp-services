@@ -15,6 +15,9 @@ jobs:
       
       - name: Run Docker Container
         run: docker run --rm my-app
+
+      - name: Stop Docker Container
+        run: docker stop my-app
       
       # - name: Push to Docker Hub
       #   run: |
