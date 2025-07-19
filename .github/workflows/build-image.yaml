@@ -1,0 +1,25 @@
+name: Build the Image
+on:
+  workflow_dispatch
+
+jobs:
+  build-image:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Branch
+        uses: actions/checkout@v4
+      
+      - name: Build Docker Image
+        run: docker build -t my-app .
+      
+      - name: Run Docker Container
+        run: docker run --rm my-app
+      
+      # - name: Push to Docker Hub
+      #   run: |
+      #     echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
+      #     docker tag my-app myuser/my-app:v${{ github.run_count }}
+      #     docker push myuser/my-app:v${{ github.run_count }}
+
+    
