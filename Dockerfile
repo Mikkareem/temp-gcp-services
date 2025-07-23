@@ -1,4 +1,5 @@
 FROM node:24-slim
-COPY ./app /app
+WORKDIR /tmp
+COPY ./app/server.js ./
 EXPOSE 8080
-CMD [ "node /app/server" ]
+CMD [ "node", "server.js" ]
