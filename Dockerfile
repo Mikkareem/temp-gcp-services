@@ -1,4 +1,4 @@
-FROM nginx:stable-alpine-perl
-COPY ./index.html /usr/share/nginx/html
-EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+FROM node:24-slim
+COPY ./app /app
+EXPOSE 8080
+CMD [ "node /app/server" ]
