@@ -18,7 +18,8 @@ jobs:
         run: ssh-keygen -t rsa -b 4096 -C $SSH_USER@howzapp -f ~/.ssh/id_rsa
 
       - name: Setup GCP Credentials
-        run: echo '${{ secrets.GCP_PROJECT_SA_KEY }}' > terraform/credentials.json
+        run: echo '${{ secrets.GCP_PROJECT_SA_KEY }}' > credentials.json
+        working-directory: terraform
 
       - name: Setup terraform
         uses: hashicorp/setup-terraform@v3
