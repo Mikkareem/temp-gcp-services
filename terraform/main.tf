@@ -49,7 +49,7 @@ variable "ssh_user" {
 }
 
 resource "google_compute_firewall" "allow_app_ports" {
-  name    = "allow_app_ports"
+  name    = "allow-app-ports"
   description = "Listening Ports for the application"
 
   network = "default"
@@ -63,7 +63,7 @@ resource "google_compute_firewall" "allow_app_ports" {
 }
 
 resource "google_compute_instance" "app_server" {
-  name = "app_server"
+  name = "app-server"
   machine_type = var.machine_type
 
   metadata = {
@@ -71,7 +71,7 @@ resource "google_compute_instance" "app_server" {
   }
 
   boot_disk {
-    device_name = "app_server"
+    device_name = "app-server"
 
     initialize_params {
       image = var.machine_image
