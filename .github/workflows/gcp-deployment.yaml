@@ -18,7 +18,7 @@ jobs:
       - name: Setup Google CLI
         uses: google-github-actions/setup-gcloud@v2
         with:
-          service_account_key: ${{ secrets.GCP_SA_KEY }}
+          service_account_key: ${{ secrets.GCP_CI_CD_ADMIN_KEY }}
           # project_id: ${{ env.PROJECT_ID }}
           export_default_credentials: true
 
