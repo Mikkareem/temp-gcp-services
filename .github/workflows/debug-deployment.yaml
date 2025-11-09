@@ -1,7 +1,7 @@
 name: Debug deployment of Howzapp
 
 on:
-  workflow-dispatch
+  workflow_dispatch
 
 env:
   APP_DOCKER_IMAGE: "irsathkareem/howzapp-full"
