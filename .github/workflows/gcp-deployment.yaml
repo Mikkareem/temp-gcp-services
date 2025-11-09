@@ -1,0 +1,44 @@
+name: Debug Deployment to GCP
+on:
+  workflow_dispatch
+
+env:
+  PROJECT_ID: "howzapp-techullurgy-full"
+  PROJECT_NAME: "Howzapp Backend Full"
+  ORG_ID: 0 # No Organisation
+
+jobs:
+  gcp-debug-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Branch
+        uses: actions/checkout@v4
+
+      - name: Setup Google CLI
+        uses: google-github-actions/setup-gcloud@v2
+        with:
+          service_account_key: ${{ secrets.GCP_SA_KEY }}
+          # project_id: ${{ env.PROJECT_ID }}
+          export_default_credentials: true
+
+      - name: Create New GCP Project
+        run: |
+          echo "Creating Project $PROJECT_ID"
+          gcloud projects create $PROJECT_ID \
+            --name="$PROJECT_NAME" \
+            --organization=${{ env.ORG_ID }}
+
+          echo "Linking billing account..."
+          gcloud beta billing projects link $PROJECT_ID \
+            --billing-account=${{ secrets.GCP_BILLING_ACCOUNT }}
+
+      
+      - name: Set project for gcloud
+        run: gcloud config set project $PROJECT_ID
+
+      - name: Enable required APIs
+        run: |
+          gcloud services enable compute.googleapis.com \
+            iam.googleapis.com \
+            cloudresourcemanager.googleapis.com
