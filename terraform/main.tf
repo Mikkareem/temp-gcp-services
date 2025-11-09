@@ -14,12 +14,10 @@ provider "google" {
 
 variable project {
   type = string
-  default = "howzapp-techullurgy-full"
 }
 
 variable region {
   type = string
-  default = "us-central1"
 }
 
 variable machine_type {
@@ -48,11 +46,6 @@ variable "app_docker_image" {
 
 variable "ssh_user" {
   type = string
-  default = "app_user"
-}
-
-variable "ssh_private_key_path" {
-  type = string
 }
 
 resource "google_compute_firewall" "allow_app_ports" {
@@ -74,7 +67,7 @@ resource "google_compute_instance" "app_server" {
   machine_type = var.machine_type
 
   metadata = {
-    ssh-keys = "${var.ssh_user}:${file("${var.ssh_private_key_path}.pub")}"
+    ssh-keys = "${var.ssh_user}:${file("~/.ssh/id_rsa.pub")}"
   }
 
   boot_disk {
@@ -96,10 +89,17 @@ resource "google_compute_instance" "app_server" {
 
   tags = ["app-ports"]
 
+  scheduling {
+    automatic_restart   = false
+    on_host_maintenance = "TERMINATE"
+    preemptible         = false
+    provisioning_model  = "SPOT"
+  }
+
   connection {
     type = "ssh"
     user = var.ssh_user
-    private_key = var.ssh_private_key_path
+    private_key = sensitive(file("~/.ssh/id_rsa"))
     host = self.network_interface.0.access_config.0.nat_ip
   }
 
