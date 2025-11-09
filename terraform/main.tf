@@ -21,6 +21,10 @@ variable region {
   type = string
 }
 
+variable zone {
+  type = string
+}
+
 variable machine_type {
   type = string
   default = "e2-micro"
@@ -66,6 +70,8 @@ resource "google_compute_firewall" "allow_app_ports" {
 resource "google_compute_instance" "app_server" {
   name = "app-server"
   machine_type = var.machine_type
+
+  zone = var.zone
 
   metadata = {
     ssh-keys = "${var.ssh_user}:${file("~/.ssh/id_rsa.pub")}"
