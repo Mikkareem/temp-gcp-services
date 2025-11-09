@@ -10,6 +10,7 @@ terraform {
 provider "google" {
   project = var.project
   region = var.region
+  credentials = sensitive(file("credentials.json"))
 }
 
 variable project {
