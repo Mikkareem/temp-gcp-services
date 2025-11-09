@@ -74,7 +74,7 @@ resource "google_compute_instance" "app_server" {
   zone = var.zone
 
   metadata = {
-    ssh-keys = "${var.ssh_user}:${file("~/.ssh/id_rsa.pub")}"
+    ssh-keys = sensitive("${var.ssh_user}:${file("~/.ssh/id_rsa.pub")}")
   }
 
   boot_disk {
