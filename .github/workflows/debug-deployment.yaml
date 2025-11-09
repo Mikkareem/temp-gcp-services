@@ -1,0 +1,37 @@
+name: Debug deployment of Howzapp
+
+on:
+  workflow-dispatch
+
+env:
+  APP_DOCKER_IMAGE: "irsathkareem/howzapp-full"
+  GCP_PROJECT_ID: "howzapp-techullurgy-full"
+  GCP_REGION: "us-central1"
+  SSH_USER: "appuser"
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      
+      - name: SSH Key Generation
+        run: ssh-keygen -t rsa -b 4096 -C $SSH_USER@howzapp
+
+      - name: Setup terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Terraform Initialization
+        run: terraform init
+        working-directory: terraform
+
+      - name: Terraform Apply
+        env:
+          TF_VAR_project: ${{ env.GCP_PROJECT_ID }}
+          TF_VAR_region: ${{ env.GCP_REGION }}
+          TF_VAR_app_docker_image: ${{ env.APP_DOCKER_IMAGE }}
+          TF_VAR_ssh_user: ${{ env.SSH_USER }}
+        run: terraform apply # --auto-approve
+        working-directory: terraform
