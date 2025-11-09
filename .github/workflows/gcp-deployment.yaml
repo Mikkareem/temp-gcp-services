@@ -6,7 +6,6 @@ env:
   ADMIN_PROJECT_ID: "techullurgy-ci-cd"
   PROJECT_ID: "howzapp-techullurgy-full"
   PROJECT_NAME: "Howzapp Backend Full"
-  ORG_ID: 0 # No Organisation
 
 jobs:
   gcp-debug-deploy:
@@ -33,8 +32,7 @@ jobs:
         run: |
           echo "Creating Project $PROJECT_ID"
           gcloud projects create $PROJECT_ID \
-            --name="$PROJECT_NAME" \
-            --organization=${{ env.ORG_ID }}
+            --name="$PROJECT_NAME"
 
           echo "Linking billing account..."
           gcloud beta billing projects link $PROJECT_ID \
