@@ -4,7 +4,8 @@ on:
 
 env:
   PROJECT_ID: "howzapp-techullurgy-full"
-  PROJECT_NAME: "Howzapp Backend Full"
+  GCP_REGION: us-east-1
+  GCP_ZONE: us-east-1a
 
 jobs:
   gcp-debug-deploy:
@@ -21,11 +22,6 @@ jobs:
 
       - name: Setup Google CLI
         uses: google-github-actions/setup-gcloud@v2
-
-      - name: Debug
-        run: |
-          gcloud organizations list
-          gcloud auth list
       
       - name: Set project for gcloud
         run: gcloud config set project $PROJECT_ID
