@@ -10,7 +10,7 @@ jobs:
     steps:
       - name: writing server
         run: |
-          cat <<EOF > server.sh
+          cat <<'EOF' > server.sh
           #!/bin/bash
           echo "DC: $DC"
           EOF
@@ -36,8 +36,7 @@ jobs:
           {
             echo '#!/bin/bash'
             echo "export DC='${{ steps.docker_compose_content.outputs.docker_compose_content_base64 }}'"
-            # prevent $DC from expanding now
-            sed 's/\$/\\$/g' server.sh | grep -v '^#!'
+            grep -v '^#!' server.sh
           } > main.sh
 
       - name: Printing Compose file
