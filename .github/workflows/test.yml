@@ -1,0 +1,50 @@
+name: Testing
+
+on:
+  workflow_dispatch
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: writing server
+        run: |
+          cat <<EOF > server.sh
+          #!/bin/bash
+          echo "DC: $DC"
+          EOF
+
+      - name: Writing Docker compose
+        run: |
+          cat <<EOF > docker-compose.yml
+          services:
+            appserver:
+              image: temporary
+              ports:
+                - "8080:8080"
+          EOF
+
+      - name: Base64 Docker Compose
+        id: docker_compose_content
+        run: |
+          ENCODED=$(base64 -w 0 -i docker-compose.yml)
+          echo "docker_compose_content_base64=$ENCODED" >> $GITHUB_OUTPUT
+
+      - name: Writing Main file
+        run: |
+          cat <<EOF > main.sh
+          #!/bin/bash
+          export DC=${{ steps.docker_compose_content.outputs.docker_compose_content_base64 }}
+          
+          $(cat server.sh)
+          EOF
+
+      - name: Printing Compose file
+        run: cat docker-compose.yml
+        
+      - name: Printing Main file
+        run: cat main.sh
+
+      - name: Execute Server file
+        run: sudo chmod +x main.sh && ./main.sh
