@@ -33,7 +33,7 @@ jobs:
 
       - name: Writing Main file
         run: |
-          cat <<EOF > main.sh
+          cat <<'EOF' > main.sh
           #!/bin/bash
           export DC=${{ steps.docker_compose_content.outputs.docker_compose_content_base64 }}
           
