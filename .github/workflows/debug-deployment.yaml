@@ -4,11 +4,14 @@ on:
   workflow_dispatch
 
 env:
-  APP_DOCKER_IMAGE: "irsathkareem/howzapp-full"
+  # APP_DOCKER_IMAGE: "irsathkareem/howzapp-full"
   GCP_PROJECT_ID: "howzapp-techullurgy-full"
   GCP_REGION: "us-central1"
   GCP_ZONE: "us-central1-a"
   SSH_USER: "appuser"
+  DOCKER_USER: ${{ vars.DOCKERHUB_USERNAME }}
+  DOCKER_BUILD_IMAGE: "howzapp-debug-full"
+  APP_DOCKER_IMAGE: ${{ env.DOCKER_USER }}/${{ env.DOCKER_BUILD_IMAGE }}
 
 jobs:
   deploy:
