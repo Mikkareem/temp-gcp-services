@@ -33,12 +33,11 @@ jobs:
 
       - name: Writing Main file
         run: |
-          cat <<'EOF' > main.sh
-          #!/bin/bash
-          export DC=${{ steps.docker_compose_content.outputs.docker_compose_content_base64 }}
-          
-          $(cat server.sh)
-          EOF
+          {
+            echo '#!/bin/bash'
+            echo "export DC='${{ steps.docker_compose_content.outputs.docker_compose_content_base64 }}'"
+            cat server.sh
+          } > main.sh
 
       - name: Printing Compose file
         run: cat docker-compose.yml
