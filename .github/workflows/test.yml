@@ -36,7 +36,7 @@ jobs:
           cat <<EOF > main.sh
           #!/bin/bash
           export DC=${{ steps.docker_compose_content.outputs.docker_compose_content_base64 }}
-          $(cat terraform/scripts/server.sh | grep -v '^#!')
+          $(cat server.sh | grep -v '^#!')
           EOF
         
           # {
