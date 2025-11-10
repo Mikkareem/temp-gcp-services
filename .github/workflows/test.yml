@@ -37,7 +37,7 @@ jobs:
             echo '#!/bin/bash'
             echo "export DC='${{ steps.docker_compose_content.outputs.docker_compose_content_base64 }}'"
             # prevent $DC from expanding now
-            grep -v '^#!' server.sh | sed 's/\$/\\$/g'
+            sed 's/\$/\\$/g' server.sh | grep -v '^#!'
           } > main.sh
 
       - name: Printing Compose file
