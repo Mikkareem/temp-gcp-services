@@ -11,7 +11,7 @@ env:
   SSH_USER: "appuser"
   DOCKER_USER: ${{ vars.DOCKERHUB_USERNAME }}
   DOCKER_BUILD_IMAGE: "howzapp-debug-full"
-  APP_DOCKER_IMAGE: ${{ env.DOCKER_USER }}/${{ env.DOCKER_BUILD_IMAGE }}
+  APP_DOCKER_IMAGE: $DOCKER_USER/$env.DOCKER_BUILD_IMAGE
 
 jobs:
   deploy:
