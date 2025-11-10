@@ -33,11 +33,17 @@ jobs:
 
       - name: Writing Main file
         run: |
-          {
-            echo '#!/bin/bash'
-            echo "export DC='${{ steps.docker_compose_content.outputs.docker_compose_content_base64 }}'"
-            grep -v '^#!' server.sh
-          } > main.sh
+          cat <<EOF > main.sh
+          #!/bin/bash
+          export DC=${{ steps.docker_compose_content.outputs.docker_compose_content_base64 }}
+          $(cat terraform/scripts/server.sh | grep -v '^#!')
+          EOF
+        
+          # {
+          #   echo '#!/bin/bash'
+          #   echo "export DC='${{ steps.docker_compose_content.outputs.docker_compose_content_base64 }}'"
+          #   grep -v '^#!' server.sh
+          # } > main.sh
 
       - name: Printing Compose file
         run: cat docker-compose.yml
