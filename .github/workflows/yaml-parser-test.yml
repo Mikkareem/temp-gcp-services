@@ -33,3 +33,18 @@ jobs:
 
       - name: Print Yaml
         run: cat temporary.yaml
+
+      - name: Create Sample Properties
+        run: |
+          cat <<EOF > sample.properties
+          gradlePath = /org/gradle
+          # distributionUrl=123
+          distributionUrl = People are awesome!
+          region: US
+          EOF
+
+      - name: Change Properties file
+        run: yq -p=props -o=props '.distributionUrl = "We are very Welcoming in nature"' sample.properties
+
+      - name: Print Properties file
+        run: cat sample.properties
