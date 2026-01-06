@@ -21,3 +21,9 @@ jobs:
 
       - name: Print a.b[0].c
         run: yq '.a.b[0].c' temporary.yaml
+
+      - name: In-place Change of a.b[0].c
+        run: yq -i '.a.b[0].c = "ijkl"' temporary.yaml
+      
+      - name: Print a.b[0].c
+        run: yq '.a.b[0].c' temporary.yaml
