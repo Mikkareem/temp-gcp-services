@@ -40,7 +40,7 @@ jobs:
           gradlePath = /org/gradle
           # distributionUrl=123
           distributionUrl = People are awesome!
-          region: US
+          region = US
           EOF
 
       - name: Change Properties file
