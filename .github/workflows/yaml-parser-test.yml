@@ -1,0 +1,23 @@
+on:
+  workflow_dispatch:
+
+jobs:
+  yaml-parser:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download yq
+        run: |
+          wget https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -O /usr/local/bin/yq
+          chmod +x /usr/local/bin/yq
+
+      - name: Create basic Yaml file
+        run: |
+          cat <<EOF > temporary.yaml
+          a:
+            b:
+              - c: abcd
+              - c: wxyz
+          EOF
+
+      - name: Print a.b[0].c
+        run: yq '.a.b[0].c' temporary.yaml
