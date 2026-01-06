@@ -27,3 +27,9 @@ jobs:
       
       - name: Print a.b[0].c
         run: yq '.a.b[0].c' temporary.yaml
+
+      - name: In-place Change of a.b.[2].c
+        run: yq -i '.a.b.[2].c = "pqrs"' temporary.yaml
+
+      - name: Print Yaml
+        run: cat temporary.yaml
