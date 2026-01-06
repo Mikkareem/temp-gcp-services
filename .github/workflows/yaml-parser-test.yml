@@ -44,7 +44,7 @@ jobs:
           EOF
 
       - name: Change Properties file
-        run: yq -p=props -o=props '.distributionUrl = "We are very Welcoming in nature"' sample.properties
+        run: yq -i -p=props -o=props '.distributionUrl = "We are very Welcoming in nature"' sample.properties
 
       - name: Print Properties file
         run: cat sample.properties
