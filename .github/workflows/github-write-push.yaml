@@ -16,6 +16,6 @@ jobs:
 
       - run: echo "${{ github.sha }}" >> Commits.txt
       - run: |
+          git config --global --list
           git add .
           git commit -m "Actions update [bot]"
-          git config --global --list
