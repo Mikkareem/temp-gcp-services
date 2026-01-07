@@ -16,6 +16,10 @@ jobs:
 
       - run: echo "${{ github.sha }}" >> Commits.txt
       - run: |
+          git config --global user.name "Actions-Bot"
+          git config --global user.email "actions-bot@github.com"
+      - run: |
           git config --global --list
           git add .
           git commit -m "Actions update [bot]"
+          git status
