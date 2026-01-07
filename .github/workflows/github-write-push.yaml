@@ -1,0 +1,21 @@
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  push-to-github:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Checkout new / existing branch Actions
+        run: git checkout -B actions
+
+      - run: echo "${{ github.sha }}" >> Commits.txt
+      - run: |
+          git add .
+          git commit -m "Actions update [bot]"
+          git config --global --list
