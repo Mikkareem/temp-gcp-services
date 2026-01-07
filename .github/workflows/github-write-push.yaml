@@ -23,3 +23,6 @@ jobs:
           git add .
           git commit -m "Actions update [bot]"
           git status
+
+      - run: |
+          git push -u origin actions
